@@ -257,14 +257,12 @@ public class Enemy : MonoBehaviour
     {
         if (!showDebugRays) return;
 
-        // Current movement direction
         Gizmos.color = Color.green;
         DrawBoxCastGizmo((Vector2)transform.position + dirVector * collisionOffset,
                         Vector2.one * 0.8f,
                         dirVector,
                         rayDistance);
 
-        // Obstacle detection directions
         Gizmos.color = new Color(0.5f, 0.5f, 1f, 0.7f);
         Vector2[] directions = { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
         foreach (Vector2 dir in directions)
@@ -275,14 +273,14 @@ public class Enemy : MonoBehaviour
                             rayDistance);
         }
 
-        // Stuck detection area
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, 0.1f);
 
-        // State indicator
-        GUIStyle style = new GUIStyle();
-        style.normal.textColor = Color.white;
-        UnityEditor.Handles.Label(transform.position + Vector3.up * 0.5f, currentState.ToString(), style);
+#if UNITY_EDITOR
+    GUIStyle style = new GUIStyle();
+    style.normal.textColor = Color.white;
+    UnityEditor.Handles.Label(transform.position + Vector3.up * 0.5f, currentState.ToString(), style);
+#endif
     }
 
     private void DrawBoxCastGizmo(Vector2 origin, Vector2 size, Vector2 direction, float distance)
